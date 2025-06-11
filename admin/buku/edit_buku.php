@@ -1,5 +1,6 @@
 <?php
 include '../../includes/db.php';
+// include '../../includes/sidebar.php';
 
 $id = $_GET['id'];
 $query = mysqli_query($conn, "SELECT * FROM buku WHERE id = $id");

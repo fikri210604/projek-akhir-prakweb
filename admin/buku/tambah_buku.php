@@ -1,7 +1,7 @@
 <?php
 include '../../includes/db.php';
+// include '../../includes/sidebar.php';
 
-// Proses jika form disubmit
 if (isset($_POST['simpan'])) {
     $judul = $_POST['judul'];
     $penulis = $_POST['penulis'];

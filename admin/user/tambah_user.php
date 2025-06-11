@@ -1,5 +1,6 @@
 <?php
 include '../../includes/db.php';
+// include '../../includes/sidebar.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">

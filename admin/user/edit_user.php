@@ -1,5 +1,6 @@
 <?php
 include '../../includes/db.php';
+// include '../../includes/sidebar.php';
 
 $id = $_GET['id'];
 $query = mysqli_query($conn, "SELECT * FROM users WHERE id = $id");
@@ -15,6 +16,7 @@ $data = mysqli_fetch_assoc($query);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -52,9 +54,7 @@ $data = mysqli_fetch_assoc($query);
             </form>
         </div>
     </div>
-
-    <!-- Tambahkan SweetAlert CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   
 
     <?php
     if (isset($_POST['update'])) {

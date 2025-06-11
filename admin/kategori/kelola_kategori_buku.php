@@ -1,5 +1,6 @@
 <?php
 include __DIR__ . '/../../includes/db.php';
+// include __DIR__ .'/../asset/sidebar.php';
 
 $cari = isset($_GET['cari']) ? trim($_GET['cari']) : '';
 $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
@@ -117,8 +118,6 @@ $no = $offset + 1;
         </div>
     </div>
 
-    <!-- Font Awesome (untuk ikon edit/hapus jika digunakan) -->
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </body>
 
 </html>

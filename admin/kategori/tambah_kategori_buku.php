@@ -1,5 +1,6 @@
 <?php
 include '../../includes/db.php';
+// include '../../includes/sidebar.php';
 
 if (isset($_POST['simpan'])) {
     $nama_kategori = mysqli_real_escape_string($conn, $_POST['nama_kategori']);

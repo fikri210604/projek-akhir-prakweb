@@ -1,5 +1,6 @@
 <?php
 include '../../includes/db.php';
+// include '../../includes/sidebar.php';
 
 // Inisialisasi variabel pencarian dan pagination
 $cari = isset($_GET['cari']) ? trim($_GET['cari']) : '';
@@ -8,7 +9,7 @@ $page = ($page < 1) ? 1 : $page;
 $limit = 10;
 $offset = ($page - 1) * $limit;
 
-// Query pencarian
+// Query untuk pencarian
 $where = !empty($cari) ? "WHERE u.nama LIKE '%$cari%' OR b.judul LIKE '%$cari%'" : '';
 
 // Query utama
