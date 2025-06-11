@@ -1,5 +1,6 @@
 <?php
 $currentPage = basename($_SERVER['PHP_SELF'], '.php');
+$baseUrl = '/projek-akhir-prakweb/';
 ?>
 
 <div class="d-flex">
@@ -7,7 +8,7 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
   <nav id="sidebarMenu" class="text-white p-3"
     style="width: 250px; min-height: 100vh; transition: width 0.3s; background-color: #002E5F;" data-state="open">
     <div class="d-flex align-items-center mb-3" style="gap: 10px;">
-      <img src="../public/img/asset/logo.png" alt="Logo Admin" class="img-fluid"
+      <img src="<?= $baseUrl ?>public/img/asset/logo.png" alt="Logo Admin" class="img-fluid"
         style="width: 50px; height: auto;">
       <h4 class="text-white m-0" id="sidebarTitle" style="font-family: 'Montserrat', cursive; font-size: 20px;">Admin Panel</h4>
     </div>
@@ -16,7 +17,7 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
       <!-- Dashboard -->
       <li class="nav-item">
         <a class="nav-link text-white mt-3 <?= ($currentPage == 'dashboard') ? 'active bg-primary rounded' : '' ?>"
-          href="dashboard.php">
+          href="<?= $baseUrl ?>admin/dashboard.php">
           <i class="bi bi-house"></i> <span class="link-text">Dashboard</span>
         </a>
       </li>
@@ -24,7 +25,7 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
       <!-- User -->
       <li class="nav-item">
         <a class="nav-link text-white mt-3 <?= ($currentPage == 'kelola_user') ? 'active bg-primary rounded' : '' ?>"
-          href="kelola_user/kelola_user.php">
+          href="<?= $baseUrl ?>admin/user/kelola_user.php">
           <i class="bi bi-people"></i> <span class="link-text">Data User</span>
         </a>
       </li>
@@ -32,30 +33,28 @@ $currentPage = basename($_SERVER['PHP_SELF'], '.php');
       <!-- Buku -->
       <li class="nav-item">
         <a class="nav-link text-white mt-3 <?= ($currentPage == 'kelola_buku') ? 'active bg-primary rounded' : '' ?>"
-          href="kelola_buku/kelola_buku.php">
+          href="<?= $baseUrl ?>admin/buku/kelola_buku.php">
           <i class="bi bi-book"></i> <span class="link-text">Data Buku</span>
         </a>
       </li>
 
       <!-- Kategori Buku -->
       <li class="nav-item">
-        <a class="nav-link text-white mt-3 <?= ($currentPage == 'kelola_kategori') ? 'active bg-primary rounded' : '' ?>"
-          href="kelola_kategori/kelola_kategori.php">
+        <a class="nav-link text-white mt-3 <?= ($currentPage == 'kelola_kategori_buku') ? 'active bg-primary rounded' : '' ?>"
+          href="<?= $baseUrl ?>admin/kategori/kelola_kategori_buku.php">
           <i class="bi bi-tags"></i> <span class="link-text">Kategori Buku</span>
         </a>
       </li>
-
       <!-- Peminjaman -->
       <li class="nav-item">
         <a class="nav-link text-white mt-3 <?= ($currentPage == 'kelola_peminjaman') ? 'active bg-primary rounded' : '' ?>"
-          href="kelola_peminjaman/kelola_kategori.php">
+          href="<?= $baseUrl ?>admin/peminjaman/kelola_peminjaman.php">
           <i class="bi bi-journal-bookmark-fill"></i> <span class="link-text">Peminjaman</span>
         </a>
       </li>
-
       <!-- Logout -->
       <li class="nav-item">
-        <a class="nav-link text-white bg-danger rounded" href="../logout.php">
+        <a class="nav-link text-white bg-danger rounded mt-3" href="<?= $baseUrl ?>../../logout.php">
           <i class="bi bi-box-arrow-right"></i> <span class="link-text">Logout</span>
         </a>
       </li>
