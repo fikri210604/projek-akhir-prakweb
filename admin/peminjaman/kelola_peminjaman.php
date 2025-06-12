@@ -1,6 +1,6 @@
 <?php
 include '../../includes/db.php';
-// include '../../includes/sidebar.php';
+include '../asset/sidebar.php';
 
 // Inisialisasi variabel pencarian dan pagination
 $cari = isset($_GET['cari']) ? trim($_GET['cari']) : '';
@@ -14,7 +14,7 @@ $where = !empty($cari) ? "WHERE u.nama LIKE '%$cari%' OR b.judul LIKE '%$cari%'"
 
 // Query utama
 $query = mysqli_query($conn, "
-    SELECT p.*, u.nama AS nama_user, b.judul AS judul_buku b.foto AS foto_buku
+    SELECT p.*, u.nama AS nama_user, b.judul AS judul_buku, b.foto AS foto_buku
     FROM peminjaman p
     JOIN users u ON p.users_id = u.id
     JOIN buku b ON p.buku_id = b.id
@@ -46,6 +46,7 @@ $no = $offset + 1;
     <title>Kelola Peminjaman</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 </head>
 
 <body style="background-color: #E1E1E1;">
@@ -60,7 +61,7 @@ $no = $offset + 1;
                             placeholder="Cari nama atau judul buku..." value="<?= htmlspecialchars($cari ?? '') ?>">
                         <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i> Cari</button>
                         <?php if (!empty($cari)): ?>
-                            <a href="kelola_peminjaman.php" class="btn btn-secondary">Reset</a>
+                            <a href="kelola_peminjaman.php" class="btn btn-secondary me-2">Reset</a>
                         <?php endif; ?>
                     </div>
                 </form>

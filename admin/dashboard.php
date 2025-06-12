@@ -1,15 +1,15 @@
 <?php
 include '../includes/db.php';
 
-// Hitung jumlah penyewa
+// Menghitung jumlah penyewa
 $queryPenyewa = mysqli_query($conn, "SELECT COUNT(*) AS total_penyewa FROM users WHERE role = 'user'");
 $jumlahPenyewa = mysqli_fetch_assoc($queryPenyewa)['total_penyewa'];
 
-// Hitung jumlah buku
+// Menghitung jumlah kategori buku dan menghitung jumlah buku
 $queryBuku = mysqli_query($conn, "SELECT COUNT(*) AS total_buku FROM buku");
 $jumlahBuku = mysqli_fetch_assoc($queryBuku)['total_buku'];
 
-// Hitung jumlah buku yang sedang dipinjam
+// Menghitung jumlah buku yang sedang dipinjam
 $querySewa = mysqli_query($conn, "SELECT COUNT(*) AS total_sewa FROM peminjaman WHERE status = 'dipinjam'");
 $jumlahSewa = mysqli_fetch_assoc($querySewa)['total_sewa'];
 ?>
@@ -27,7 +27,7 @@ $jumlahSewa = mysqli_fetch_assoc($querySewa)['total_sewa'];
 </head>
 
 <body style="background-color: #E1E1E1;">
-<?php include_once("asset/sidebar.php"); ?>
+<?php include("asset/sidebar.php"); ?>
 
     <div class="container mt-4">
         <h2 class="mb-4">Dashboard Admin</h2>

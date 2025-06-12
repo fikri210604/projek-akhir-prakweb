@@ -10,10 +10,9 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 
-<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+<body class="bg-gradient-to-r from-blue-100 to-green-100 flex items-center justify-center min-h-screen">
     <div class="container mx-auto my-10 bg-blue-100 rounded-lg shadow-lg p-6">
         <div class="flex flex-col md:flex-row items-center justify-center gap-10">
-            <!-- Gambar -->
             <div class="w-full md:w-1/2 flex justify-center">
                 <img src="uploads/background.png" alt="Ilustrasi" class="w-80 md:w-full max-w-md object-contain">
             </div>

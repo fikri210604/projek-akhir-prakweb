@@ -2,7 +2,7 @@
 session_start();
 
 if (isset($_SESSION['alert'])) {
-    $type = $_SESSION['alert']['type']; // 'success' atau 'error'
+    $type = $_SESSION['alert']['type'];
     $message = $_SESSION['alert']['message'];
 
     $color = $type === 'success' ? 'green' : 'red';
