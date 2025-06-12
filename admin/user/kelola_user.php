@@ -1,6 +1,6 @@
 <?php
 include __DIR__ . '/../../includes/db.php';
-// include __DIR__ . '/../asset/sidebar.php';
+include __DIR__ . '/../asset/sidebar.php';
 
 // Inisialisasi variabel pencarian dan pagination
 $cari = isset($_GET['cari']) ? trim($_GET['cari']) : '';

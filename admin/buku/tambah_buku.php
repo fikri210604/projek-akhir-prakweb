@@ -1,6 +1,7 @@
 <?php
 include '../../includes/db.php';
-// include '../../includes/sidebar.php';
+include '../asset/sidebar.php';
+session_start();
 
 if (isset($_POST['simpan'])) {
     $judul = $_POST['judul'];
@@ -37,7 +38,7 @@ if (isset($_POST['simpan'])) {
                 showConfirmButton: false,
                 timer: 1500
             }).then(() => {
-                window.location = 'data_buku.php';
+                window.location = 'kelola_buku.php';
             });
         </script>";
     } else {

@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,8 +10,8 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 
-<body class="bg-gray-100 flex justify-center items-center min-h-screen">
-    <div class="container mx-auto my-10 bg-blue-100 rounded-lg shadow-lg p-6">
+<body class="bg-gradient-to-r from-blue-100 to-green-100 flex items-center justify-center min-h-screen">
+    <div class="container mx-auto my-10 bg-blue-200 rounded-lg shadow-sm p-6 outline outline-1 outline-green-500">
         <div class="flex flex-col md:flex-row items-center justify-center gap-10">
             <!-- Gambar -->
             <div class="w-full md:w-1/2 flex justify-center">
@@ -46,9 +48,9 @@
                     </button>
                 </form>
 
-                <p class="text-sm mt-4 text-blue-300">
+                <p class="text-sm mt-4 text-blue-400">
                     Belum punya akun?
-                    <a href="register.php" class="text-blue-600 hover:underline font-bold">Daftar di sini</a>
+                    <a href="register.php" class="text-blue-700 hover:underline font-bold">Daftar di sini</a>
                 </p>
             </div>
         </div>

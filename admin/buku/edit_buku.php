@@ -93,8 +93,6 @@ if (isset($_POST['update'])) {
         if (!is_dir($folder)) mkdir($folder, 0777, true);
         move_uploaded_file($tmp, $folder . $foto);
         $foto_simpan = $foto;
-
-        // Hapus foto lama jika diganti
         if ($foto_lama && file_exists($folder . $foto_lama)) {
             unlink($folder . $foto_lama);
         }
@@ -116,7 +114,7 @@ if (isset($_POST['update'])) {
                 showConfirmButton: false,
                 timer: 1500
             }).then(() => {
-                window.location = 'data_buku.php';
+                window.location = 'kelola_buku.php';
             });
         </script>";
     } else {
