@@ -1,84 +1,49 @@
 <?php
+session_start();
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+    header("Location: ../login.php");
+    exit();
+}
 include '../includes/db.php';
-
-// Menghitung jumlah penyewa
-$queryPenyewa = mysqli_query($conn, "SELECT COUNT(*) AS total_penyewa FROM users WHERE role = 'user'");
-$jumlahPenyewa = mysqli_fetch_assoc($queryPenyewa)['total_penyewa'];
-
-// Menghitung jumlah kategori buku dan menghitung jumlah buku
-$queryBuku = mysqli_query($conn, "SELECT COUNT(*) AS total_buku FROM buku");
-$jumlahBuku = mysqli_fetch_assoc($queryBuku)['total_buku'];
-
-// Menghitung jumlah buku yang sedang dipinjam
-$querySewa = mysqli_query($conn, "SELECT COUNT(*) AS total_sewa FROM peminjaman WHERE status = 'dipinjam'");
-$jumlahSewa = mysqli_fetch_assoc($querySewa)['total_sewa'];
 ?>
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboard Admin</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
+<body class="bg-gray-100">
 
-<body style="background-color: #E1E1E1;">
-<?php include("asset/sidebar.php"); ?>
+    <div class="flex h-screen">
+        <?php include 'asset/sidebar.php'; ?>
 
-    <div class="container mt-4">
-        <h2 class="mb-4">Dashboard Admin</h2>
-        <div class="alert alert-info" role="alert">
-            Selamat datang di dashboard admin! Di sini Anda dapat melihat statistik perpustakaan.
-        </div>
-
-        <div class="bg-light p-4 rounded shadow-md mt-3">
-            <div class="row g-4">
-                <!-- Jumlah Penyewa -->
-                <div class="col-md-4">
-                    <div class="card shadow-sm border-0">
-                        <div class="card-body text-center">
-                            <div class="mb-3">
-                                <i class="bi bi-person-lines-fill text-primary" style="font-size: 2.5rem;"></i>
-                            </div>
-                            <h6 class="card-title text-muted">Jumlah Penyewa</h6>
-                            <p class="display-6 fw-bold text-primary"><?php echo $jumlahPenyewa; ?></p>
-                        </div>
-                    </div>
+        <main class="flex-grow p-8 overflow-auto">
+            <h1 class="text-3xl font-bold mb-4">Admin Dashboard</h1>
+            <p>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>!</p>
+            
+            <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-2">Total Users</h2>
+                    <p class="text-3xl"><?php echo $conn->query("SELECT COUNT(*) as count FROM users")->fetch_assoc()['count']; ?></p>
                 </div>
-
-                <!-- Jumlah Buku -->
-                <div class="col-md-4">
-                    <div class="card shadow-sm border-0">
-                        <div class="card-body text-center">
-                            <div class="mb-3">
-                                <i class="bi bi-journal-bookmark-fill text-success" style="font-size: 2.5rem;"></i>
-                            </div>
-                            <h6 class="card-title text-muted">Jumlah Buku</h6>
-                            <p class="display-6 fw-bold text-success"><?php echo $jumlahBuku; ?></p>
-                        </div>
-                    </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-2">Total Books</h2>
+                    <p class="text-3xl"><?php echo $conn->query("SELECT COUNT(*) as count FROM buku")->fetch_assoc()['count']; ?></p>
                 </div>
-
-                <!-- Jumlah Buku Disewa -->
-                <div class="col-md-4">
-                    <div class="card shadow-sm border-0">
-                        <div class="card-body text-center">
-                            <div class="mb-3">
-                                <i class="bi bi-bag-check-fill text-danger" style="font-size: 2.5rem;"></i>
-                            </div>
-                            <h6 class="card-title text-muted">Buku Sedang Dipinjam</h6>
-                            <p class="display-6 fw-bold text-danger"><?php echo $jumlahSewa; ?></p>
-                        </div>
-                    </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-2">Total Categories</h2>
+                    <p class="text-3xl"><?php echo $conn->query("SELECT COUNT(*) as count FROM kategori")->fetch_assoc()['count']; ?></p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h2 class="text-xl font-bold mb-2">Total Loans</h2>
+                    <p class="text-3xl"><?php echo $conn->query("SELECT COUNT(*) as count FROM peminjaman")->fetch_assoc()['count']; ?></p>
                 </div>
             </div>
-        </div>
+        </main>
     </div>
 
 </body>
-
 </html>

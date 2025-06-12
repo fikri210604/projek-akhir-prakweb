@@ -21,55 +21,61 @@ $data = mysqli_fetch_assoc($query);
     <h2>Edit Buku</h2>
     <div class="bg-light p-4 rounded shadow">
         <form method="post" enctype="multipart/form-data">
-            <div class="mb-3">
-                <label class="form-label">Judul</label>
-                <input type="text" name="judul" value="<?= $data['judul'] ?>" class="form-control" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Penulis</label>
-                <input type="text" name="penulis" value="<?= $data['penulis'] ?>" class="form-control" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Penerbit</label>
-                <input type="text" name="penerbit" value="<?= $data['penerbit'] ?>" class="form-control" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Tahun Terbit</label>
-                <input type="number" name="tahun_terbit" value="<?= $data['tahun_terbit'] ?>" class="form-control" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Kategori</label>
-                <select name="kategori_id" class="form-select" required>
-                    <?php
-                    $kategori = mysqli_query($conn, "SELECT * FROM kategori");
-                    while ($k = mysqli_fetch_assoc($kategori)) {
-                        $selected = $k['id'] == $data['kategori_id'] ? 'selected' : '';
-                        echo "<option value='{$k['id']}' $selected>{$k['nama_kategori']}</option>";
-                    }
-                    ?>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Jumlah</label>
-                <input type="number" name="jumlah" value="<?= $data['jumlah'] ?>" class="form-control" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Status</label>
-                <select name="status" class="form-select" required>
-                    <option value="tersedia" <?= $data['status'] == 'tersedia' ? 'selected' : '' ?>>Tersedia</option>
-                    <option value="dipinjam" <?= $data['status'] == 'dipinjam' ? 'selected' : '' ?>>Dipinjam</option>
-                </select>
-            </div>
-            <div class="mb-3">
-                <label class="form-label">Foto Buku</label><br>
-                <?php if ($data['foto']): ?>
-                    <img src="../../uploads/buku/<?= $data['foto'] ?>" width="100" class="mb-2"><br>
-                <?php endif; ?>
-                <input type="file" name="foto" accept="image/*" class="form-control">
-                <input type="hidden" name="foto_lama" value="<?= $data['foto'] ?>">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label">Judul</label>
+                        <input type="text" name="judul" value="<?= $data['judul'] ?>" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Penulis</label>
+                        <input type="text" name="penulis" value="<?= $data['penulis'] ?>" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Penerbit</label>
+                        <input type="text" name="penerbit" value="<?= $data['penerbit'] ?>" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Kategori</label>
+                        <select name="kategori_id" class="form-select" required>
+                            <?php
+                            $kategori = mysqli_query($conn, "SELECT * FROM kategori");
+                            while ($k = mysqli_fetch_assoc($kategori)) {
+                                $selected = $k['id'] == $data['kategori_id'] ? 'selected' : '';
+                                echo "<option value='{$k['id']}' $selected>{$k['nama_kategori']}</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="form-label">Tahun Terbit</label>
+                        <input type="number" name="tahun_terbit" value="<?= $data['tahun_terbit'] ?>" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Jumlah</label>
+                        <input type="number" name="jumlah" value="<?= $data['jumlah'] ?>" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Status</label>
+                        <select name="status" class="form-select" required>
+                            <option value="tersedia" <?= $data['status'] == 'tersedia' ? 'selected' : '' ?>>Tersedia</option>
+                            <option value="dipinjam" <?= $data['status'] == 'dipinjam' ? 'selected' : '' ?>>Dipinjam</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Foto Buku</label><br>
+                        <?php if ($data['foto']): ?>
+                            <img src="../../uploads/buku/<?= $data['foto'] ?>" width="100" class="mb-2"><br>
+                        <?php endif; ?>
+                        <input type="file" name="foto" accept="image/*" class="form-control">
+                        <input type="hidden" name="foto_lama" value="<?= $data['foto'] ?>">
+                    </div>
+                </div>
             </div>
             <button type="submit" name="update" class="btn btn-success"><i class="bi bi-save"></i> Simpan</button>
-            <a href="data_buku.php" class="btn btn-secondary">Kembali</a>
+            <a href="kelola_buku.php" class="btn btn-secondary">Kembali</a>
         </form>
     </div>
 </div>

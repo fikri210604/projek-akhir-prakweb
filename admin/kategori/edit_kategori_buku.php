@@ -96,10 +96,13 @@ if (isset($_POST['update'])) {
                             class="rounded shadow" alt="Foto Lama">
                     </div>
                 </div>
-                <div class="mt-4">
-                    <button type="submit" name="update" class="btn btn-primary"><i class="bi bi-save"></i>
-                        Simpan</button>
-                    <a href="kelola_kategori_buku.php" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Kembali</a>
+                <div class="mt-4 d-flex justify-content-between gap-2">
+                    <button type="submit" name="simpan" class="btn btn-primary">
+                        <i class="bi bi-save"></i> Simpan
+                    </button>
+                    <a href="kelola_kategori_buku.php" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> Kembali
+                    </a>
                 </div>
             </form>
         </div>
