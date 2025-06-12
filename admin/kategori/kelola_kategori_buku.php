@@ -78,8 +78,14 @@ $no = $offset + 1;
                                     <tr class="text-center align-middle">
                                         <td><?= $no++ ?></td>
                                         <td>
-                                            <img src="../../uploads/kategori/<?= htmlspecialchars($row['foto'] ?? 'default.png') ?>"
-                                                alt="Foto" width="70" height="70" class="rounded">
+                                            <?php
+                                            $foto_path = '../../uploads/kategori/' . htmlspecialchars($row['foto_kategori']);
+                                            if (empty($row['foto_kategori']) || !file_exists($foto_path)) {
+                                                $foto_path = '../../uploads/kategori/default.png'; // Pastikan default.png ada di sini
+                                            }
+                                            ?>
+                                            <img src="<?= $foto_path ?>" alt="Foto Kategori" width="70" height="70"
+                                                class="rounded">
                                         </td>
                                         <td><?= htmlspecialchars($row['nama_kategori']) ?></td>
                                         <td><?= htmlspecialchars($row['deskripsi']) ?></td>
