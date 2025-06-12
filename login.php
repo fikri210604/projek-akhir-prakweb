@@ -22,7 +22,7 @@
             <div class="w-full md:w-1/2 max-w-md">
                 <h1 class="text-3xl font-bold text-gray-800 mb-2">Masuk</h1>
                 <p class="text-gray-600 mb-4 text-sm">
-                    Silakan masukkan nama lengkap dan password sesuai email yang telah dikirimkan.
+                    Silahkan Masukkan Nama Lengkap dan Password Anda
                 </p>
 
                 <!-- Alert Error -->
@@ -34,13 +34,18 @@
                 <?php endif; ?>
 
                 <form action="includes/auth/proses_login.php" method="POST" class="flex flex-col gap-4">
-                    <input type="text" name="nama" placeholder="Masukkan Nama Lengkap"
+                    <input type="email" name="email" placeholder="Masukkan email Anda"
                         class="px-4 py-3 border border-rose-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-300"
                         required>
 
-                    <input type="password" name="password" placeholder="Masukkan Password"
-                        class="px-4 py-3 border border-rose-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-300"
-                        required>
+                    <div class="relative">
+                        <input type="password" id="password" name="password" placeholder="Masukkan Password"
+                            class="w-full px-4 py-3 border border-rose-200 rounded-lg pr-10" required>
+                        <span onclick="togglePassword('password', this)"
+                            class="absolute right-3 top-3 cursor-pointer text-gray-500">
+                            <i class="fas fa-eye"></i>
+                        </span>
+                    </div>
 
                     <button type="submit"
                         class="bg-blue-500 text-white rounded-full py-3 font-semibold hover:bg-blue-600 transition duration-300">
@@ -55,6 +60,21 @@
             </div>
         </div>
     </div>
+    <script>
+        function togglePassword(id, el) {
+            const input = document.getElementById(id);
+            const icon = el.querySelector('i');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+    </script>
 </body>
 
 </html>

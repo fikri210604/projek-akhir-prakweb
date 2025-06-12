@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-    // Cek konfirmasi password
+    // Cek konfirmasi password 
     if ($password !== $konfirmasi) {
         $_SESSION['error'] = "Konfirmasi password tidak sesuai!";
         header("Location: ../../register.php");
