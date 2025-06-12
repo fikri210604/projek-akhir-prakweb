@@ -10,78 +10,76 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 
-<body class="bg-gradient-to-r from-blue-100 to-green-100 flex items-center justify-center min-h-screen">
-    <div class="container mx-auto my-10 bg-blue-100 rounded-lg shadow-lg p-6">
-        <div class="flex flex-col md:flex-row items-center justify-center gap-10">
-            <div class="w-full md:w-1/2 flex justify-center">
-                <img src="uploads/background.png" alt="Ilustrasi" class="w-80 md:w-full max-w-md object-contain">
-            </div>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+    <div class="w-full max-w-5xl bg-white rounded-3xl shadow-xl overflow-hidden grid md:grid-cols-2">
+        <!-- Ilustrasi -->
+        <div class="bg-blue-200 flex justify-center items-center p-10">
+            <img src="uploads/gambar00.png" alt="Ilustrasi" class="max-w-xs md:max-w-sm">
+        </div>
 
-            <!-- Form Register -->
-            <div class="w-full md:w-1/2 max-w-md">
-                <h1 class="text-3xl font-bold text-gray-800 mb-2">Daftar</h1>
-                <p class="text-gray-600 mb-4 text-sm">Silakan isi form untuk membuat akun</p>
+        <!-- Form Register -->
+        <div class="p-10 flex flex-col justify-center">
+            
 
-                <!-- Alert Error -->
-                <?php if (isset($_SESSION['error'])): ?>
-                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
-                        <strong class="font-bold">Error:</strong> <?= htmlspecialchars($_SESSION['error']) ?>
-                    </div>
-                    <?php unset($_SESSION['error']); ?>
-                <?php endif; ?>
+            <h2 class="text-3xl font-bold text-gray-800 mb-2">Register</h2>
+            <p class="text-sm text-gray-500 mb-6">Silakan isi data di bawah untuk membuat akun</p>
 
-                <!-- Alert Success -->
-                <?php if (isset($_SESSION['success'])): ?>
-                    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
-                        role="alert">
-                        <strong class="font-bold">Berhasil:</strong> <?= htmlspecialchars($_SESSION['success']) ?>
-                    </div>
-                    <?php unset($_SESSION['success']); ?>
-                <?php endif; ?>
+            <?php if (isset($_SESSION['error'])): ?>
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+                    <strong class="font-bold">Error:</strong> <?= htmlspecialchars($_SESSION['error']) ?>
+                </div>
+                <?php unset($_SESSION['error']); ?>
+            <?php endif; ?>
 
-                <form action="includes/auth/proses_registrasi.php" method="POST" class="flex flex-col gap-4">
-                    <input type="email" name="email" placeholder="Masukkan email Anda"
-                        class="px-4 py-3 border border-rose-200 rounded-lg" required>
+            <?php if (isset($_SESSION['success'])): ?>
+                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+                    <strong class="font-bold">Berhasil:</strong> <?= htmlspecialchars($_SESSION['success']) ?>
+                </div>
+                <?php unset($_SESSION['success']); ?>
+            <?php endif; ?>
 
-                    <input type="text" name="nama" placeholder="Masukkan Nama Lengkap Anda"
-                        class="px-4 py-3 border border-rose-200 rounded-lg" required>
+            <form action="includes/auth/proses_registrasi.php" method="POST" class="space-y-4">
+                <input type="email" name="email" placeholder="Masukkan email Anda"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-800" required>
 
-                    <input type="text" name="nomor_telepon" placeholder="Masukkan Nomor Telepon Anda"
-                        class="px-4 py-3 border border-rose-200 rounded-lg" required>
+                <input type="text" name="nama" placeholder="Masukkan Nama Lengkap Anda"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-800" required>
 
-                    <select name="role" class="px-4 py-3 border border-rose-200 rounded-lg" required>
-                        <option value="">-- Pilih Role --</option>
-                        <option value="petugas">Petugas</option>
-                        <option value="penyewa">Penyewa</option>
-                    </select>
-                    <div class="relative">
-                        <input type="password" id="password" name="password" placeholder="Masukkan Password"
-                            class="w-full px-4 py-3 border border-rose-200 rounded-lg pr-10" required>
-                        <span onclick="togglePassword('password', this)"
-                            class="absolute right-3 top-3 cursor-pointer text-gray-500">
-                            <i class="fas fa-eye"></i>
-                        </span>
-                    </div>
-                    <div class="relative">
-                        <input type="password" id="konfirmasi_password" name="konfirmasi_password"
-                            placeholder="Konfirmasi Password"
-                            class="w-full px-4 py-3 border border-rose-200 rounded-lg pr-10" required>
-                        <span onclick="togglePassword('konfirmasi_password', this)"
-                            class="absolute right-3 top-3 cursor-pointer text-gray-500">
-                            <i class="fas fa-eye"></i>
-                        </span>
-                    </div>
-                    <button type="submit"
-                        class="bg-blue-500 text-white rounded-full py-3 font-semibold hover:bg-blue-600 transition duration-300">
-                        Daftar
-                    </button>
-                </form>
+                <input type="text" name="nomor_telepon" placeholder="Masukkan Nomor Telepon Anda"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-800" required>
 
-                <p class="text-sm mt-4 text-blue-400">
-                    Sudah punya akun?
-                    <a href="login.php" class="text-blue-600 hover:underline font-bold">Login di sini</a>
-                </p>
-            </div>
+                <select name="role" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-800" required>
+                    <option value="">-- Pilih Role --</option>
+                    <option value="petugas">Petugas</option>
+                    <option value="penyewa">Penyewa</option>
+                </select>
+
+                <div class="relative">
+                    <input type="password" id="password" name="password" placeholder="Masukkan Password"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg pr-10 focus:ring-2 focus:ring-blue-800" required>
+                    <span onclick="togglePassword('password', this)"
+                        class="absolute right-3 top-3 cursor-pointer text-gray-500">
+                        <i class="fas fa-eye"></i>
+                    </span>
+                </div>
+
+                <div class="relative">
+                    <input type="password" id="konfirmasi_password" name="konfirmasi_password"
+                        placeholder="Konfirmasi Password"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg pr-10 focus:ring-2 focus:ring-blue-800" required>
+                    <span onclick="togglePassword('konfirmasi_password', this)"
+                        class="absolute right-3 top-3 cursor-pointer text-gray-500">
+                        <i class="fas fa-eye"></i>
+                    </span>
+                </div>
+                <div class="text-right text-sm text-gray-500 mb-4">
+                    Sudah punya akun? <a href="login.php" class="text-blue-500 font-semibold hover:underline">Login di sini</a>
+                </div>
+                <button type="submit"
+                    class="w-full bg-blue-800 hover:bg-blue-900 text-white font-semibold py-3 rounded-lg transition">
+                    Daftar
+                </button>
+            </form>
         </div>
     </div>
 
@@ -101,8 +99,5 @@
         }
     </script>
 </body>
-
-
-
 
 </html>
