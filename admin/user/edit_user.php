@@ -1,6 +1,13 @@
 <?php
+session_start();
+if (!isset($_SESSION['login']) || $_SESSION['role'] !== 'petugas') {
+    header("Location: ../login.php");
+    exit;
+}
+
 include '../../includes/db.php';
-// include '../../includes/sidebar.php';
+include '../asset/navbar.php';
+
 
 $id = $_GET['id'];
 $query = mysqli_query($conn, "SELECT * FROM users WHERE id = $id");
@@ -16,13 +23,14 @@ $data = mysqli_fetch_assoc($query);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
-    <div class="container mt-4">
+    <div class="container mt-4 text-bold text-2xl p-4">
         <h2>Edit User</h2>
-        <div class="container p-4 bg-light rounded shadow-lg">
+        <div class="container p-4 bg-light rounded shadow-lg mt-4">
             <form method="post">
                 <div class="mb-2">
                     <label>Email</label>

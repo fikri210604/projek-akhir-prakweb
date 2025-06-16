@@ -1,7 +1,7 @@
 <?php
-include '../../includes/db.php';
-include '../asset/sidebar.php';
 session_start();
+include '../../includes/db.php';
+include '../asset/navbar.php';
 
 if (isset($_POST['simpan'])) {
     $judul = $_POST['judul'];
@@ -58,6 +58,8 @@ if (isset($_POST['simpan'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
 </head>
 
 <body>

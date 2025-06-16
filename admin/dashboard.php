@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 // Jika belum login atau bukan role 'petugas', arahkan ke login
 if (!isset($_SESSION['login']) || $_SESSION['role'] !== 'petugas') {
     header("Location: ../login.php");
@@ -8,6 +7,7 @@ if (!isset($_SESSION['login']) || $_SESSION['role'] !== 'petugas') {
 }
 
 include '../includes/db.php';
+include 'asset/navbar.php';
 
 
 // Hitung jumlah penyewa
@@ -33,12 +33,12 @@ $jumlahSewa = mysqli_fetch_assoc($querySewa)['total_sewa'];
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
 </head>
 
 <body style="background-color: #E1E1E1;">
-    
-    <div class="container mt-4">
-        <?php include("asset/sidebar.php"); ?>
+        <div class="container mt-4">
         <h2 class="mb-4">Dashboard Admin</h2>
         <div class="alert alert-info" role="alert">
             Selamat datang di dashboard admin! Di sini Anda dapat melihat statistik perpustakaan.

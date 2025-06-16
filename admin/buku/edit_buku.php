@@ -1,6 +1,6 @@
 <?php
 include '../../includes/db.php';
-// include '../../includes/sidebar.php';
+include '../asset/navbar.php';
 
 session_start();
 $id = $_GET['id'];

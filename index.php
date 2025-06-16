@@ -1,24 +1,48 @@
 <?php
-include '../includes/db.php';
-$search = isset($_GET['search']) ? $_GET['search'] : '';
-$where = $search ? "WHERE judul LIKE '%$search%'" : '';
+include 'includes/db.php';
+
+$search = $_GET['search'] ?? '';
+$kategori_id = $_GET['kategori'] ?? '';
+$where = [];
+
+if (!empty($search)) {
+    $search = mysqli_real_escape_string($conn, $search);
+    $where[] = "judul LIKE '%$search%'";
+}
+if (!empty($kategori_id)) {
+    $kategori_id = (int) $kategori_id;
+    $where[] = "kategori_id = $kategori_id";
+}
+$where_sql = $where ? "WHERE " . implode(" AND ", $where) : "";
 $kategori = mysqli_query($conn, "SELECT * FROM kategori");
-$buku = mysqli_query($conn, "SELECT * FROM buku $where LIMIT 5");
+$buku = mysqli_query($conn, "SELECT * FROM buku $where_sql");
 ?>
+
 
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8">
   <title>SIMPENKU | Landing Page</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    html, body { height: 100%; overflow: hidden; }
+    html,
+    body {
+      height: 100%;
+      overflow: hidden;
+    }
+
     @media (max-width: 1024px) {
-      html, body { overflow: auto; }
+
+      html,
+      body {
+        overflow: auto;
+      }
     }
   </style>
 </head>
+
 <body class="bg-blue-50 min-h-screen flex flex-col h-screen overflow-hidden">
 
   <!-- Navbar -->
@@ -28,8 +52,10 @@ $buku = mysqli_query($conn, "SELECT * FROM buku $where LIMIT 5");
       <span class="text-xl font-bold text-blue-700">SIMPENKU</span>
     </div>
     <div>
-      <a href="login.php" class="bg-blue-500 text-white px-4 py-2 rounded-xl mr-2 hover:bg-blue-600 transition">Login</a>
-      <a href="register.php" class="bg-blue-100 text-blue-700 px-4 py-2 rounded-xl border border-blue-500 hover:bg-blue-200 transition">Register</a>
+      <a href="login.php"
+        class="bg-blue-500 text-white px-4 py-2 rounded-xl mr-2 hover:bg-blue-600 transition">Login</a>
+      <a href="register.php"
+        class="bg-blue-100 text-blue-700 px-4 py-2 rounded-xl border border-blue-500 hover:bg-blue-200 transition">Register</a>
     </div>
   </nav>
 
@@ -40,7 +66,6 @@ $buku = mysqli_query($conn, "SELECT * FROM buku $where LIMIT 5");
         <div class="flex-shrink-0 flex flex-col justify-center items-center h-full mr-3">
           <img src="discover1.png" class="w-24 md:w-28 -mt-24" alt="Gambar kiri" />
         </div>
-        <!-- Teks tengah + form -->
         <div class="flex-1 flex flex-col items-center">
           <h1 class="text-3xl md:text-4xl font-extrabold text-center text-blue-900 mb-0">
             Selamat datang di <span class="text-blue-700">SIMPENKU</span>
@@ -53,8 +78,8 @@ $buku = mysqli_query($conn, "SELECT * FROM buku $where LIMIT 5");
           </span>
           <form method="get" class="flex w-full max-w-lg mx-auto mb-2 mt-6">
             <input name="search" value="<?= htmlspecialchars($search) ?>"
-              class="flex-1 rounded-l-full border border-blue-300 px-4 py-2 focus:outline-none"
-              type="text" placeholder="Cari Buku">
+              class="flex-1 rounded-l-full border border-blue-300 px-4 py-2 focus:outline-none" type="text"
+              placeholder="Cari Buku">
             <button type="submit"
               class="rounded-r-full bg-orange-400 text-white px-6 py-2 font-bold hover:bg-orange-500 transition">
               Cari
@@ -62,22 +87,23 @@ $buku = mysqli_query($conn, "SELECT * FROM buku $where LIMIT 5");
           </form>
           <!-- Kategori -->
           <div class="flex flex-wrap gap-2 justify-center mb-1">
-            <a href="?" class="px-3 py-1 rounded-full bg-blue-200 hover:bg-blue-400 text-blue-900 text-xs font-medium">Semua</a>
+            <a href="?"
+              class="px-3 py-1 rounded-full bg-blue-200 hover:bg-blue-400 text-blue-900 text-xs font-medium">Semua</a>
             <?php
             mysqli_data_seek($kategori, 0);
-            while($kat = mysqli_fetch_assoc($kategori)): ?>
+            while ($kat = mysqli_fetch_assoc($kategori)): ?>
               <a href="?kategori=<?= $kat['id'] ?>"
-                class="px-3 py-1 rounded-full bg-blue-100 hover:bg-blue-400 text-blue-900 text-xs font-medium"><?= htmlspecialchars($kat['nama']) ?></a>
+                class="px-3 py-1 rounded-full bg-blue-100 hover:bg-blue-400 text-blue-900 text-xs font-medium"><?= htmlspecialchars($kat['nama_kategori']) ?></a>
             <?php endwhile; ?>
           </div>
         </div>
         <!-- Gambar kanan -->
         <div class="flex-shrink-0 flex flex-col justify-center items-center h-full ml-3">
-          <img src="discover2.png" class="w-24 md:w-28 mt-12" alt="Gambar kanan" />
+          <img src="uploads/gambar00.png" class="w-24 md:w-28 mt-12" alt="Gambar kanan" />
         </div>
       </div>
     </div>
-
+    
     <!-- Daftar Buku -->
     <section class="flex flex-col justify-end pb-0 mb-0 -mt-14 ">
       <div class="max-w-7xl mx-auto px-4 pt-0 pb-0 w-full flex flex-col">
@@ -92,18 +118,17 @@ $buku = mysqli_query($conn, "SELECT * FROM buku $where LIMIT 5");
           <div class="w-24 md:w-24 lg:w-28 flex-shrink-0"></div>
           <div class="flex-1">
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-0">
-              <?php while($row = mysqli_fetch_assoc($buku)): ?>
+              <?php while ($row = mysqli_fetch_assoc($buku)): ?>
                 <div class="flex flex-col items-center">
-                  <img src="<?= htmlspecialchars($row['cover_url'] ?: 'https://img.icons8.com/ios/100/book.png') ?>"
-                    class="h-40 w-32 object-cover rounded-xl mb-2 border border-blue-200 shadow"
-                    alt="cover">
+                  <img src="uploads/buku/<?= !empty($row['foto']) ? htmlspecialchars($row['foto']) : 'default.png' ?>"
+                    class="h-40 w-32 object-cover rounded-xl mb-2 border border-blue-200 shadow" alt="cover">
                   <span class="font-extrabold text-sm text-black uppercase tracking-wide mb-1 text-center">
                     <?= strtoupper(htmlspecialchars($row['judul'])) ?>
                   </span>
                   <span class="text-xs text-gray-600 text-center mb-1"><?= htmlspecialchars($row['penulis']) ?></span>
                 </div>
               <?php endwhile; ?>
-              <?php if(mysqli_num_rows($buku) == 0): ?>
+              <?php if (mysqli_num_rows($buku) == 0): ?>
                 <p class="col-span-5 text-center text-gray-500">Tidak ada buku ditemukan.</p>
               <?php endif; ?>
             </div>
@@ -117,4 +142,5 @@ $buku = mysqli_query($conn, "SELECT * FROM buku $where LIMIT 5");
     &copy; <?= date('Y') ?> SIMPENKU - Semua hak cipta dilindungi
   </footer>
 </body>
+
 </html>

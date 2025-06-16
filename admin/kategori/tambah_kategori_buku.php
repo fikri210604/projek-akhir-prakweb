@@ -1,7 +1,11 @@
 <?php
 session_start();
+if (!isset($_SESSION['login']) || $_SESSION['role'] !== 'petugas') {
+    header("Location: ../login.php");
+    exit;
+}
 include '../../includes/db.php';
-include '../asset/sidebar.php';
+include '../asset/navbar.php';
 
 if (isset($_POST['simpan'])) {
     $nama_kategori = mysqli_real_escape_string($conn, $_POST['nama_kategori']);
@@ -36,6 +40,7 @@ if (isset($_POST['simpan'])) {
     <title>Tambah Kategori</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body">

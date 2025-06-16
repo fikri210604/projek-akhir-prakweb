@@ -48,12 +48,10 @@ $dataPeminjaman = mysqli_fetch_all($queryPeminjaman, MYSQLI_ASSOC);
                 </div>
             </div>
         </div>
-
-        <!-- Daftar Buku Dipinjam -->
         <h2 class="text-xl font-semibold mb-4">Buku yang Dipinjam</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             <?php foreach ($dataPeminjaman as $row): ?>
-                <div class="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden">
+                <div class="relative group bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden">
                     <a href="detail_buku.php?id=<?= $row['buku_id'] ?>">
                         <img src="../uploads/buku/<?= $row['foto'] ?>" alt="<?= $row['judul'] ?>"
                             class="w-full h-48 object-cover">
@@ -69,8 +67,15 @@ $dataPeminjaman = mysqli_fetch_all($queryPeminjaman, MYSQLI_ASSOC);
                             Sisa <?= $row['sisa_hari'] ?> hari
                         </span>
                     </div>
+                    <div class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <a href="edit_tanggal.php?id=<?= $row['id'] ?>"
+                            class="bg-yellow-500 text-white px-3 py-1 text-sm rounded hover:bg-yellow-600 shadow">
+                            Edit Tanggal
+                        </a>
+                    </div>
                 </div>
             <?php endforeach; ?>
+
         </div>
 
         <!-- Form Peminjaman Buku -->
