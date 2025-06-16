@@ -34,9 +34,11 @@ $no = $offset + 1;
 </head>
 
 <body>
-    <?php include '../asset/sidebar.php'; ?>
+    <div class="d-flex">
+        <?php include '../asset/sidebar.php'; ?>
+    </div>
 
-    <div class="container mt-4 p-4">
+    <div class="container py-5">
         <div class="card shadow border-0">
             <!-- Header -->
             <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">

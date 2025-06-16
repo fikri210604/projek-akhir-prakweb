@@ -1,4 +1,5 @@
 <?php
+session_start();
 include '../../includes/db.php';
 include '../asset/sidebar.php';
 
@@ -49,7 +50,7 @@ $no = $offset + 1;
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 </head>
 
-<body style="background-color: #E1E1E1;">
+<body>
     <div class="container mt-4">
         <div class="card shadow-lg border-0">
 

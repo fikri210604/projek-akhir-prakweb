@@ -1,7 +1,7 @@
 <?php
 include '../../includes/db.php';
 // include '../../includes/sidebar.php';
-
+session_start();
 $id = $_GET['id'];
 $query = mysqli_query($conn, "SELECT * FROM kategori WHERE id = $id");
 $row = mysqli_fetch_assoc($query);

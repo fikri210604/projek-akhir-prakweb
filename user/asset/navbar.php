@@ -1,7 +1,7 @@
 <nav id="navbar" class="fixed w-full z-50 bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
     <div class="max-w-screen-xl mx-auto px-4 lg:px-6 py-2.5 flex justify-between items-center">
         <a href="<?= isset($_SESSION['login']) && $_SESSION['login'] == 'true' ? 'dashboard_user.php' : 'index.php' ?>" class="flex items-center">
-            <img src="/../..uploads/logo.png" class="mr-3 h-6 sm:h-9" alt="Logo">
+            <img src="../../uploads/logo.png" class="mr-3 h-6 sm:h-9" alt="Logo">
             <span class="text-xl font-semibold dark:text-white">SIMPENKU</span>
         </a>
 

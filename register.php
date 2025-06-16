@@ -19,7 +19,7 @@
 
         <!-- Form Register -->
         <div class="p-10 flex flex-col justify-center">
-            
+
 
             <h2 class="text-3xl font-bold text-gray-800 mb-2">Register</h2>
             <p class="text-sm text-gray-500 mb-6">Silakan isi data di bawah untuk membuat akun</p>
@@ -32,7 +32,8 @@
             <?php endif; ?>
 
             <?php if (isset($_SESSION['success'])): ?>
-                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
+                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
+                    role="alert">
                     <strong class="font-bold">Berhasil:</strong> <?= htmlspecialchars($_SESSION['success']) ?>
                 </div>
                 <?php unset($_SESSION['success']); ?>
@@ -40,15 +41,21 @@
 
             <form action="includes/auth/proses_registrasi.php" method="POST" class="space-y-4">
                 <input type="email" name="email" placeholder="Masukkan email Anda"
-                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-800" required>
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-800"
+                    required>
 
                 <input type="text" name="nama" placeholder="Masukkan Nama Lengkap Anda"
-                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-800" required>
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-800"
+                    required>
 
-                <input type="text" name="nomor_telepon" placeholder="Masukkan Nomor Telepon Anda"
-                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-800" required>
+                <input type="tel" name="nomor_telepon" placeholder="Masukkan Nomor Telepon Anda"
+                    pattern="^(\+62|0)[0-9]{9,13}$"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-800"
+                    required>
 
-                <select name="role" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-800" required>
+                <select name="role"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-800"
+                    required>
                     <option value="">-- Pilih Role --</option>
                     <option value="petugas">Petugas</option>
                     <option value="penyewa">Penyewa</option>
@@ -56,7 +63,8 @@
 
                 <div class="relative">
                     <input type="password" id="password" name="password" placeholder="Masukkan Password"
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg pr-10 focus:ring-2 focus:ring-blue-800" required>
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg pr-10 focus:ring-2 focus:ring-blue-800"
+                        required>
                     <span onclick="togglePassword('password', this)"
                         class="absolute right-3 top-3 cursor-pointer text-gray-500">
                         <i class="fas fa-eye"></i>
@@ -66,14 +74,16 @@
                 <div class="relative">
                     <input type="password" id="konfirmasi_password" name="konfirmasi_password"
                         placeholder="Konfirmasi Password"
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg pr-10 focus:ring-2 focus:ring-blue-800" required>
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg pr-10 focus:ring-2 focus:ring-blue-800"
+                        required>
                     <span onclick="togglePassword('konfirmasi_password', this)"
                         class="absolute right-3 top-3 cursor-pointer text-gray-500">
                         <i class="fas fa-eye"></i>
                     </span>
                 </div>
                 <div class="text-right text-sm text-gray-500 mb-4">
-                    Sudah punya akun? <a href="login.php" class="text-blue-500 font-semibold hover:underline">Login di sini</a>
+                    Sudah punya akun? <a href="login.php" class="text-blue-500 font-semibold hover:underline">Login di
+                        sini</a>
                 </div>
                 <button type="submit"
                     class="w-full bg-blue-800 hover:bg-blue-900 text-white font-semibold py-3 rounded-lg transition">

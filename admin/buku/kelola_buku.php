@@ -1,4 +1,5 @@
 <?php
+session_start();
 include '../../includes/db.php';
 include '../asset/sidebar.php';
 
@@ -23,7 +24,7 @@ while ($row = mysqli_fetch_assoc($query)) {
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Kelola Buku</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
