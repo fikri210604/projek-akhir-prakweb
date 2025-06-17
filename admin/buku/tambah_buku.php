@@ -17,7 +17,6 @@ if (isset($_POST['simpan'])) {
     $tmp = $_FILES['foto']['tmp_name'];
     $folder = "../../uploads/buku/";
 
-    // Folder dibuat juka belum ada
     if (!is_dir($folder)) {
         mkdir($folder, 0777, true);
     }
