@@ -10,11 +10,11 @@
         <!-- Menu -->
         <div class="flex items-center space-x-4">
             <?php if (isset($_SESSION['login']) && $_SESSION['login'] == 'true'): ?>
-                <a href="../dashboard_user.php" class="text-gray-700 hover:text-blue-500 transition">Dashboard</a>
-                <a href="../user/kelola_user.php" class="text-gray-700 hover:text-blue-500 transition">Kelola User</a>
-                <a href="../kategori/kelola_kategori_buku.php" class="text-gray-700 hover:text-blue-500 transition">Kategori</a>
-                <a href="../buku/kelola_buku.php" class="text-gray-700 hover:text-blue-500 transition">Buku</a>
-                <a href="../peminjaman/kelola_peminjaman.php" class="text-gray-700 hover:text-blue-500 transition">Peminjaman</a>
+                <a href="<?= base_url('admin/dashboard.php')?>"class="text-gray-700 hover:text-blue-500 transition">Dashboard</a>
+                <a href="<?= base_url('admin/user/kelola_user.php') ?>" class="text-gray-700 hover:text-blue-500 transition">Kelola User</a>
+                <a href="<?= base_url('admin/kategori/kelola_kategori_buku.php') ?>" class="text-gray-700 hover:text-blue-500 transition">Kategori</a>
+                <a href="<?= base_url('admin/buku/kelola_buku.php') ?>" class="text-gray-700 hover:text-blue-500 transition">Buku</a>
+                <a href="<?= base_url('admin/peminjaman/kelola_peminjaman.php') ?>" class="text-gray-700 hover:text-blue-500 transition">Peminjaman</a>
 
                 <!-- Dropdown User -->
                 <div class="relative inline-block text-left">
