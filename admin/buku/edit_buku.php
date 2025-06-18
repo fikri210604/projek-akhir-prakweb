@@ -30,7 +30,15 @@ $data = mysqli_fetch_assoc($query);
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Penulis</label>
-                        <input type="text" name="penulis" value="<?= $data['penulis'] ?>" class="form-control" required>
+                        <select name="penulis_id" class="form-select" required>
+                            <?php
+                            $penulis = mysqli_query($conn, "SELECT * FROM penulis");
+                            while ($k = mysqli_fetch_assoc($penulis)) {
+                                $selected = $k['id'] == $data['penulis_id'] ? 'selected' : '';
+                                echo "<option value='{$k['id']}' $selected>{$k['nama_penulis']}</option>";
+                            }
+                            ?>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Penerbit</label>

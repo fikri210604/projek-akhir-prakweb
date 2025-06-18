@@ -12,6 +12,7 @@
             <?php if (isset($_SESSION['login']) && $_SESSION['login'] == 'true'): ?>
                 <a href="<?= base_url('admin/dashboard.php')?>"class="text-gray-700 hover:text-blue-500 transition">Dashboard</a>
                 <a href="<?= base_url('admin/user/kelola_user.php') ?>" class="text-gray-700 hover:text-blue-500 transition">Kelola User</a>
+                <a href="<?= base_url('admin/penulis/kelola_penulis.php') ?>" class="text-gray-700 hover:text-blue-500 transition">Kelola Penulis</a>
                 <a href="<?= base_url('admin/kategori/kelola_kategori_buku.php') ?>" class="text-gray-700 hover:text-blue-500 transition">Kategori</a>
                 <a href="<?= base_url('admin/buku/kelola_buku.php') ?>" class="text-gray-700 hover:text-blue-500 transition">Buku</a>
                 <a href="<?= base_url('admin/peminjaman/kelola_peminjaman.php') ?>" class="text-gray-700 hover:text-blue-500 transition">Peminjaman</a>
@@ -31,7 +32,7 @@
                     <!-- Dropdown Menu -->
                     <div id="dropdownMenu" class="hidden absolute right-0 mt-2 w-44 bg-white border border-gray-200 rounded-md shadow-lg z-50 dark:bg-gray-800 dark:border-gray-600">
                         <a href="edit_profil.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Edit Profil</a>
-                        <a href="../../logout.php" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-700">Logout</a>
+                        <a href="<?= base_url('logout.php') ?>" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-gray-700">Logout</a>
                     </div>
                 </div>
 

@@ -16,11 +16,11 @@ $limit = ($limit < 1) ? 10 : $limit;
 $offset = ($page - 1) * $limit;
 
 if (!empty($cari)) {
-    $query = mysqli_query($conn, "SELECT * FROM users WHERE nama LIKE '%$cari%' LIMIT $limit OFFSET $offset");
-    $total_query = mysqli_query($conn, "SELECT COUNT(*) as total FROM users WHERE nama LIKE '%$cari%'");
+    $query = mysqli_query($conn, "SELECT * FROM penulis WHERE nama_penulis LIKE '%$cari%' LIMIT $limit OFFSET $offset");
+    $total_query = mysqli_query($conn, "SELECT COUNT(*) as total FROM penulis WHERE nama_penulis LIKE '%$cari%'");
 } else {
-    $query = mysqli_query($conn, "SELECT * FROM users LIMIT $limit OFFSET $offset");
-    $total_query = mysqli_query($conn, "SELECT COUNT(*) as total FROM users");
+    $query = mysqli_query($conn, "SELECT * FROM penulis LIMIT $limit OFFSET $offset");
+    $total_query = mysqli_query($conn, "SELECT COUNT(*) as total FROM penulis");
 }
 
 $total_data = mysqli_fetch_assoc($total_query)['total'];
@@ -30,10 +30,11 @@ $no = $offset + 1;
 
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Data User</title>
+    <title>Data Penulis</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
@@ -43,7 +44,7 @@ $no = $offset + 1;
 <body style="background-color: #f8f9fa;">
     <main class="container-fluid py-4">
         <div class="container">
-            <h2 class="mb-4 text-center fw-bold">Daftar Akun Pengguna</h2>
+            <h2 class="mb-4 text-center fw-bold">Daftar Penulis</h2>
 
             <div class="card shadow-sm rounded-4 border-0">
                 <div class="card-body p-4">
@@ -59,27 +60,28 @@ $no = $offset + 1;
                                 </select>
                                 <button type="submit" class="btn btn-primary me-2"><i class="bi bi-search"></i></button>
                                 <?php if (!empty($cari)): ?>
-                                    <a href="kelola_user.php" class="btn btn-secondary">Reset</a>
+                                    <a href="kelola_penulis.php" class="btn btn-secondary">Reset</a>
                                 <?php endif; ?>
                             </form>
                         </div>
                         <div class="col-md-4 text-md-end">
-                            <a href="tambah_user.php" class="btn btn-success">
-                                <i class="fas fa-plus"></i> Tambah Pengguna
+                            <a href="tambah_penulis.php" class="btn btn-success">
+                                <i class="fas fa-plus"></i> Tambah Penulis
                             </a>
                         </div>
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table table-bordered table-hover text-center align-middle table-striped">
+                        <table class="table table-bordered table-hover text-center align-middle">
                             <thead class="table-primary">
                                 <tr>
                                     <th>No</th>
-                                    <th>Email</th>
-                                    <th>Nama</th>
-                                    <th>Nomor Telepon</th>
-                                    <th>Role</th>
-                                    <th>Dibuat Pada</th>
+                                    <th>Foto</th>
+                                    <th>Nama Penulis</th>
+                                    <th>Biografi</th>
+                                    <th>Tanggal Lahir</th>
+                                    <th>Kebangsaan</th>
+                                    <th>Jenis Kelamin</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -88,20 +90,25 @@ $no = $offset + 1;
                                     <?php while ($row = mysqli_fetch_assoc($query)): ?>
                                         <tr>
                                             <td><?= $no++ ?></td>
-                                            <td class="text-start"><?= htmlspecialchars($row['email']) ?></td>
-                                            <td><?= htmlspecialchars($row['nama']) ?></td>
-                                            <td><?= $row['nomor_telepon'] ?? '-' ?></td>
                                             <td>
-                                                <span class="badge <?= $row['role'] === 'petugas' ? 'bg-primary' : 'bg-success' ?>">
-                                                    <?= ucfirst($row['role']) ?>
-                                                </span>
+                                                <?php
+                                                $foto_path = '../../uploads/penulis/' . htmlspecialchars($row['foto']);
+                                                if (empty($row['foto']) || !file_exists($foto_path)) {
+                                                    $foto_path = '../../uploads/penulis/default.png';
+                                                }
+                                                ?>
+                                                <img src="<?= $foto_path ?>" alt="Foto Penulis" width="70" height="70" class="rounded">
                                             </td>
-                                            <td><?= date('d-m-Y H:i', strtotime($row['created_at'])) ?></td>
+                                            <td class="text-start"><?= htmlspecialchars($row['nama_penulis']) ?></td>
+                                            <td><?= htmlspecialchars($row['bio']) ?></td>
+                                            <td><?= htmlspecialchars($row['tanggal_lahir']) ?></td>
+                                            <td><?= htmlspecialchars($row['kebangsaan']) ?></td>
+                                            <td><?= htmlspecialchars($row['jenis_kelamin']) ?></td>
                                             <td>
-                                                <a href="edit_user.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-outline-primary me-1" title="Edit">
+                                                <a href="edit_penulis.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-outline-primary me-1" title="Edit">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-                                                <a href="crud-user/hapus_user.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Hapus akun ini?')" title="Hapus">
+                                                <a href="hapus_penulis.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Hapus penulis ini?')" title="Hapus">
                                                     <i class="fas fa-trash-alt"></i>
                                                 </a>
                                             </td>
@@ -109,7 +116,7 @@ $no = $offset + 1;
                                     <?php endwhile; ?>
                                 <?php else: ?>
                                     <tr>
-                                        <td colspan="7" class="text-center">Data tidak ditemukan</td>
+                                        <td colspan="8" class="text-center">Data tidak ditemukan</td>
                                     </tr>
                                 <?php endif; ?>
                             </tbody>
@@ -129,7 +136,7 @@ $no = $offset + 1;
                             </li>
                         </ul>
                     </nav>
-
+                    
                 </div>
             </div>
         </div>

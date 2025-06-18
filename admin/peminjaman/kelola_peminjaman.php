@@ -51,84 +51,109 @@ $no = $offset + 1;
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 
-<body>
-    <div class="container mt-4">
-        <div class="card shadow-lg border-0">
 
-            <div class="card-body bg-light">
-                <!-- Form Pencarian -->
-                <form method="GET" class="row g-3 mb-4">
-                    <div class="col-md-6 d-flex">
-                        <input type="text" name="cari" class="form-control-sm me-2"
-                            placeholder="Cari nama atau judul buku..." value="<?= htmlspecialchars($cari ?? '') ?>">
-                        <button type="submit" class="btn btn-primary"><i class="bi bi-search"></i> Cari</button>
-                        <?php if (!empty($cari)): ?>
-                            <a href="kelola_peminjaman.php" class="btn btn-secondary me-2">Reset</a>
-                        <?php endif; ?>
+<body style="background-color: #f8f9fa;">
+    <main class="container-fluid py-4">
+        <div class="container">
+            <h2 class="mb-4 text-center fw-bold">Daftar Peminjaman Buku</h2>
+
+            <div class="card shadow-sm rounded-4 border-0">
+                <div class="card-body p-4">
+                    <div class="row mb-3 align-items-center">
+                        <div class="col-md-12">
+                            <form method="GET" class="d-flex">
+                                <input type="text" name="cari" class="form-control me-2"
+                                    placeholder="Cari nama peminjam atau judul buku..."
+                                    value="<?= htmlspecialchars($cari) ?>">
+                                <select name="limit" class="form-select me-2" onchange="this.form.submit()"
+                                    style="width: auto;">
+                                    <option value="5" <?= ($limit == 5) ? 'selected' : '' ?>>5</option>
+                                    <option value="10" <?= ($limit == 10) ? 'selected' : '' ?>>10</option>
+                                    <option value="25" <?= ($limit == 25) ? 'selected' : '' ?>>25</option>
+                                    <option value="50" <?= ($limit == 50) ? 'selected' : '' ?>>50</option>
+                                </select>
+                                <button type="submit" class="btn btn-primary me-2"><i class="bi bi-search"></i></button>
+                                <?php if (!empty($cari)): ?>
+                                    <a href="kelola_peminjaman.php" class="btn btn-secondary">Reset</a>
+                                <?php endif; ?>
+                            </form>
+                        </div>
                     </div>
-                </form>
 
-                <div class="table-responsive">
-                    <table class="table table-bordered table-hover text-center">
-                        <thead class="text-white" style="background-color: #cfe2ff;">
-                            <tr class="fw-bold">
-                                <th>No</th>
-                                <th>Foto Buku</th>
-                                <th>Nama Peminjam</th>
-                                <th>Judul Buku</th>
-                                <th>Tanggal Pinjam</th>
-                                <th>Tanggal Kembali</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php if (mysqli_num_rows($query) > 0): ?>
-                                <?php while ($row = mysqli_fetch_assoc($query)): ?>
-                                    <tr>
-                                        <td><?= $no++ ?></td>
-                                        <td>
-                                            <img src="../../uploads/buku/<?= htmlspecialchars($row['foto_buku']) ?>"
-                                                alt="Foto Buku" width="70" height="70" class="rounded">
-                                        </td>
-                                        <td><?= htmlspecialchars($row['nama_user']) ?></td>
-                                        <td><?= htmlspecialchars($row['judul_buku']) ?></td>
-                                        <td><?= date('d-m-Y', strtotime($row['tanggal_pinjam'])) ?></td>
-                                        <td><?= $row['tanggal_kembali'] ? date('d-m-Y', strtotime($row['tanggal_kembali'])) : '-' ?>
-                                        </td>
-                                        <td>
-                                            <span
-                                                class="badge <?= $row['status'] === 'kembali' ? 'bg-success' : 'bg-warning text-dark' ?>">
-                                                <?= ucfirst($row['status']) ?>
-                                            </span>
-                                        </td>
-                                    </tr>
-                                <?php endwhile; ?>
-                            <?php else: ?>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover text-center align-middle">
+                            <thead class="table-primary">
                                 <tr>
-                                    <td colspan="6">Data tidak ditemukan</td>
+                                    <th>No</th>
+                                    <th>Foto Buku</th>
+                                    <th>Nama Peminjam</th>
+                                    <th>Judul Buku</th>
+                                    <th>Tanggal Pinjam</th>
+                                    <th>Tanggal Kembali</th>
+                                    <th>Aksi</th>
+                                    <th>Status</th>
                                 </tr>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
-                </div>
+                            </thead>
+                            <tbody>
+                                <?php if ($query && mysqli_num_rows($query) > 0): ?>
+                                    <?php while ($row = mysqli_fetch_assoc($query)): ?>
+                                        <tr>
+                                            <td><?= $no++ ?></td>
+                                            <td>
+                                                <img src="../../uploads/buku/<?= htmlspecialchars($row['foto_buku']) ?>"
+                                                    alt="Foto Buku" width="70" height="70" class="rounded mx-auto">
+                                            </td>
+                                            <td><?= htmlspecialchars($row['nama_user']) ?></td>
+                                            <td><?= htmlspecialchars($row['judul_buku']) ?></td>
+                                            <td><?= date('d-m-Y', strtotime($row['tanggal_pinjam'])) ?></td>
+                                            <td><?= $row['tanggal_kembali'] ? date('d-m-Y', strtotime($row['tanggal_kembali'])) : '-' ?>
+                                            </td>
+                                            <td>
+                                                <span
+                                                    class="badge <?= $row['status'] === 'kembali' ? 'bg-success' : 'bg-warning text-dark' ?>">
+                                                    <?= ucfirst($row['status']) ?>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <a href="hapus_peminjaman.php?id=<?= $row['id'] ?>"
+                                                    class="btn btn-sm btn-outline-danger"
+                                                    onclick="return confirm('Hapus peminjaman ini?')" title="Hapus">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <?php endwhile; ?>
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="7" class="text-center">Data tidak ditemukan</td>
+                                    </tr>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </div>
 
-                <!-- Pagination -->
-                <nav aria-label="Page navigation" class="mt-3">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item <?= ($page <= 1) ? 'disabled' : '' ?>">
-                            <a class="page-link"
-                                href="?page=<?= max(1, $page - 1) ?>&cari=<?= urlencode($cari) ?>">Prev</a>
-                        </li>
-                        <li class="page-item active"><span class="page-link"><?= $page ?></span></li>
-                        <li class="page-item <?= ($page >= $total_pages) ? 'disabled' : '' ?>">
-                            <a class="page-link"
-                                href="?page=<?= min($total_pages, $page + 1) ?>&cari=<?= urlencode($cari) ?>">Next</a>
-                        </li>
-                    </ul>
-                </nav>
+                    <nav class="mt-4" aria-label="Navigasi halaman">
+                        <?php if ($total_pages > 1): ?>
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item <?= ($page <= 1) ? 'disabled' : '' ?>">
+                                    <a class="page-link"
+                                        href="?page=<?= max(1, $page - 1) ?>&cari=<?= urlencode($cari) ?>&limit=<?= $limit ?>">Prev</a>
+                                </li>
+                                <li class="page-item active">
+                                    <span class="page-link"><?= $page ?></span>
+                                </li>
+                                <li class="page-item <?= ($page >= $total_pages) ? 'disabled' : '' ?>">
+                                    <a class="page-link"
+                                        href="?page=<?= min($total_pages, $page + 1) ?>&cari=<?= urlencode($cari) ?>&limit=<?= $limit ?>">Next</a>
+                                </li>
+                            </ul>
+                        <?php endif; ?>
+                    </nav>
+
+                </div>
             </div>
         </div>
-    </div>
+    </main>
 </body>
 
 </html>

@@ -22,61 +22,62 @@ include '../asset/navbar.php';
 </head>
 
 <body>
-<!-- HTML Form -->
-<div class="container mt-4">
-    <div class="container p-4 bg-light rounded shadow-lg mb-4">
-        <h2>Tambah User</h2>
+    <!-- HTML Form -->
+    <div class="container mt-4">
+        <div class="container p-4 bg-light rounded shadow-lg mb-4">
+            <h2>Tambah User</h2>
+        </div>
+        <div class="container p-4 bg-light rounded shadow-lg">
+            <form method="post">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label>Email</label>
+                        <input type="email" name="email" required class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        <label>Nama</label>
+                        <input type="text" name="nama" required class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        <label>Nomor Telepon</label>
+                        <input type="text" name="nomor_telepon" required class="form-control">
+                    </div>
+                    <div class="col-md-6">
+                        <label>Role</label>
+                        <select name="role" required class="form-control">
+                            <option value="admin">Admin</option>
+                            <option value="user">User</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mt-3">
+                    <label>Password</label>
+                    <input type="password" name="password" required class="form-control">
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <a href="kelola_user.php" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Kembali</a>
+                    <button type="submit" name="simpan" class="btn btn-success"><i class="bi bi-save"></i>
+                        Simpan</button>
+                </div>
+            </form>
+
+        </div>
     </div>
-    <div class="container p-4 bg-light rounded shadow-lg">
-        <form method="post">
-            <div class="row g-3">
-                <div class="col-md-6">
-                    <label>Email</label>
-                    <input type="email" name="email" required class="form-control">
-                </div>
-                <div class="col-md-6">
-                    <label>Nama</label>
-                    <input type="text" name="nama" required class="form-control">
-                </div>
-                <div class="col-md-6">
-                    <label>Nomor Telepon</label>
-                    <input type="text" name="nomor_telepon" required class="form-control">
-                </div>
-                <div class="col-md-6">
-                    <label>Role</label>
-                    <select name="role" required class="form-control">
-                        <option value="admin">Admin</option>
-                        <option value="user">User</option>
-                    </select>
-                </div>
-            </div>
 
-            <div class="mt-3">
-                <label>Password</label>
-                <input type="password" name="password" required class="form-control">
-            </div>
+    <?php
+    if (isset($_POST['simpan'])) {
+        $email = $_POST['email'];
+        $nama = $_POST['nama'];
+        $nohp = $_POST['nomor_telepon'];
+        $role = $_POST['role'];
+        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-            <div class="mt-4">
-                <button type="submit" name="simpan" class="btn btn-success">Simpan</button>
-                <a href="kelola_user.php" class="btn btn-secondary">Kembali</a>
-            </div>
-        </form>
+        $insert = mysqli_query($conn, "INSERT INTO users (email, nama, nomor_telepon, role, password) VALUES ('$email', '$nama', '$nohp', '$role', '$password')");
 
-    </div>
-</div>
-
-<?php
-if (isset($_POST['simpan'])) {
-    $email = $_POST['email'];
-    $nama = $_POST['nama'];
-    $nohp = $_POST['nomor_telepon'];
-    $role = $_POST['role'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-
-    $insert = mysqli_query($conn, "INSERT INTO users (email, nama, nomor_telepon, role, password) VALUES ('$email', '$nama', '$nohp', '$role', '$password')");
-
-    if ($insert) {
-        echo "<script>
+        if ($insert) {
+            echo "<script>
             Swal.fire({
                 icon: 'success',
                 title: 'Berhasil!',
@@ -87,13 +88,14 @@ if (isset($_POST['simpan'])) {
                 window.location = 'data_user.php';
             });
         </script>";
-    } else {
-        echo "<script>
+        } else {
+            echo "<script>
             Swal.fire('Gagal', 'Terjadi kesalahan saat menambahkan.', 'error');
         </script>";
+        }
     }
-}
-?>
+    ?>
 
 </body>
+
 </html>

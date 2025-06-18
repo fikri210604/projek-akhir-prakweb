@@ -5,7 +5,7 @@ include '../asset/navbar.php';
 
 if (isset($_POST['simpan'])) {
     $judul = $_POST['judul'];
-    $penulis = $_POST['penulis'];
+    $penulis = $_POST['penulis_id'];
     $penerbit = $_POST['penerbit'];
     $tahun = $_POST['tahun_terbit'];
     $kategori = $_POST['kategori_id'];
@@ -24,12 +24,24 @@ if (isset($_POST['simpan'])) {
     $path_simpan = $folder . $foto;
     move_uploaded_file($tmp, $path_simpan);
 
-    $insert = mysqli_query($conn, "INSERT INTO buku 
-        (judul, penulis, penerbit, tahun_terbit, kategori_id, jumlah, status, foto) 
+    $cek_buku = mysqli_query($conn, "SELECT * FROM buku WHERE judul = '$judul'");
+    if (mysqli_num_rows($cek_buku) > 0) {
+        echo "<script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Duplikat!',
+            text: 'Buku dengan judul tersebut sudah ada.',
+            showConfirmButton: false,
+            timer: 2000
+        });
+    </script>";
+    } else {
+        $insert = mysqli_query($conn, "INSERT INTO buku 
+        (judul, penulis_id, penerbit, tahun_terbit, kategori_id, jumlah, status, foto) 
         VALUES ('$judul', '$penulis', '$penerbit', '$tahun', '$kategori', '$jumlah', '$status', '$foto')");
 
-    if ($insert) {
-        echo "<script>
+        if ($insert) {
+            echo "<script>
             Swal.fire({
                 icon: 'success',
                 title: 'Berhasil!',
@@ -40,11 +52,13 @@ if (isset($_POST['simpan'])) {
                 window.location = 'kelola_buku.php';
             });
         </script>";
-    } else {
-        echo "<script>
+        } else {
+            echo "<script>
             Swal.fire('Gagal', 'Terjadi kesalahan saat menambahkan.', 'error');
         </script>";
+        }
     }
+
 }
 
 ?>
@@ -72,8 +86,16 @@ if (isset($_POST['simpan'])) {
                         <input type="text" name="judul" required class="form-control">
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label class="form-label"><i class="bi bi-person"></i> Penulis</label>
-                        <input type="text" name="penulis" required class="form-control">
+                        <label class="form-label"><i class="bi bi-tags"></i> Penulis</label>
+                        <select name="penulis_id" class="form-select" required>
+                            <option value="">Pilih penulis</option>
+                            <?php
+                            $penulis = mysqli_query($conn, "SELECT * FROM penulis");
+                            while ($row = mysqli_fetch_assoc($penulis)) {
+                                echo "<option value='{$row['id']}'>{$row['nama_penulis']}</option>";
+                            }
+                            ?>
+                        </select>
                     </div>
 
                     <div class="col-md-6 mb-3">
