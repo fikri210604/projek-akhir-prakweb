@@ -24,7 +24,6 @@ $query = mysqli_query($conn, "
     LIMIT $limit OFFSET $offset
 ");
 
-// Hitung total data untuk pagination
 $total_query = mysqli_query($conn, "
     SELECT COUNT(*) as total 
     FROM peminjaman p

@@ -54,7 +54,7 @@ $buku = mysqli_query($conn, "
   <!-- Hero Section -->
   <section class="bg-blue-50 py-8">
     <div class="max-w-6xl mx-auto flex items-center justify-between px-4">
-      <img src="discover1.png" class="w-24 md:w-28 hidden md:block -mt-10" alt="Gambar kiri">
+      <img src="uploads/gambar00.png" class="w-24 md:w-28 hidden md:block -mt-10" alt="Gambar kiri">
       <div class="text-center flex-1">
         <h1 class="text-3xl md:text-4xl font-extrabold text-blue-900">
           Selamat datang di <span class="text-blue-700">SIMPENKU</span>
