@@ -21,6 +21,7 @@ if (empty($tanggal_pinjam) || empty($tanggal_kembali)) {
 } elseif (strtotime($tanggal_kembali) < strtotime($tanggal_pinjam)) {
     $pesan = "Tanggal kembali tidak boleh lebih awal dari tanggal pinjam!";
     $tipe = "error";
+
 } else {
     $cekBuku = mysqli_query($conn, "SELECT * FROM buku WHERE id = $buku_id");
     $dataBuku = mysqli_fetch_assoc($cekBuku);

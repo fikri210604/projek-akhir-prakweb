@@ -31,7 +31,7 @@ if (!$data) {
     <div class="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
         <h1 class="text-xl font-bold mb-4 text-center">Edit Tanggal Peminjaman</h1>
         <p class="text-center text-gray-600 mb-6">Judul: <strong><?= htmlspecialchars($data['judul']) ?></strong></p>
-        <form action="update_tanggal.php" method="POST" class="space-y-4">
+        <form action="<?= base_url('includes/update_peminjaman.php') ?>" method="POST" class="space-y-4">
             <input type="hidden" name="id" value="<?= $data['id'] ?>">
 
             <div>
