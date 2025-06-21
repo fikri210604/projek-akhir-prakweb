@@ -1,16 +1,21 @@
 <nav id="navbar" class="fixed top-0 w-full z-50 bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
     <div class="max-w-screen-xl mx-auto px-4 lg:px-6 py-3 flex justify-between items-center">
-        
         <!-- Logo dan Nama -->
-        <a href="<?= isset($_SESSION['login']) && $_SESSION['login'] == 'true' ? 'dashboard_user.php' : 'index.php' ?>" class="flex items-center space-x-2">
-            <img src="../../uploads/logo.png" class="h-8 w-auto" alt="Logo">
-            <span class="text-xl font-semibold text-gray-800 dark:text-white">SIMPENKU</span>
+        <?php
+        // Tentukan link tujuan berdasarkan status login
+        $homeUrl = (isset($_SESSION['login']) && $_SESSION['login'] === 'true') 
+            ? base_url('admin/dashboard.php') 
+            : base_url('index.php'); 
+        ?>
+        <a href="<?= $homeUrl ?>" class="flex items-center space-x-2">
+        <img src="<?= base_url('uploads/logo.png') ?>" class="h-8 w-auto" alt="Logo">
+        <span class="text-xl font-semibold text-gray-800 dark:text-white">SIMPENKU</span>
         </a>
 
         <!-- Menu -->
         <div class="flex items-center space-x-4">
-            <?php if (isset($_SESSION['login']) && $_SESSION['login'] == 'true'): ?>
-                <a href="<?= base_url('admin/dashboard.php')?>"class="text-gray-700 hover:text-blue-500 transition">Dashboard</a>
+            <?php if (isset($_SESSION['login']) && $_SESSION['login'] === 'true'): ?>
+                <a href="<?= base_url('admin/dashboard.php') ?>" class="text-gray-700 hover:text-blue-500 transition">Dashboard</a>
                 <a href="<?= base_url('admin/user/kelola_user.php') ?>" class="text-gray-700 hover:text-blue-500 transition">Kelola User</a>
                 <a href="<?= base_url('admin/penulis/kelola_penulis.php') ?>" class="text-gray-700 hover:text-blue-500 transition">Kelola Penulis</a>
                 <a href="<?= base_url('admin/kategori/kelola_kategori_buku.php') ?>" class="text-gray-700 hover:text-blue-500 transition">Kategori</a>
@@ -23,7 +28,7 @@
                         <svg class="w-5 h-5 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z" />
                         </svg>
-                        <span><?= $_SESSION['nama'] ?? 'User' ?></span>
+                        <span><?= htmlspecialchars($_SESSION['nama'] ?? 'User', ENT_QUOTES) ?></span>
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
                         </svg>
@@ -38,17 +43,17 @@
 
                 <!-- JS Dropdown Toggle -->
                 <script>
-                    const dropdownBtn = document.getElementById("dropdownButton");
-                    const dropdownMenu = document.getElementById("dropdownMenu");
+                    const dropdownBtn = document.getElementById('dropdownButton');
+                    const dropdownMenu = document.getElementById('dropdownMenu');
 
-                    dropdownBtn.addEventListener("click", (e) => {
+                    dropdownBtn.addEventListener('click', (e) => {
                         e.stopPropagation();
-                        dropdownMenu.classList.toggle("hidden");
+                        dropdownMenu.classList.toggle('hidden');
                     });
 
-                    document.addEventListener("click", (e) => {
+                    document.addEventListener('click', (e) => {
                         if (!dropdownBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
-                            dropdownMenu.classList.add("hidden");
+                            dropdownMenu.classList.add('hidden');
                         }
                     });
                 </script>

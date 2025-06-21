@@ -39,7 +39,7 @@ $jumlahSewa = mysqli_fetch_assoc($querySewa)['total_sewa'];
 
 <body style="background-color: #E1E1E1;">
         <div class="container mt-4">
-        <h2 class="mb-4">Dashboard Admin</h2>
+        <h2 class="mb-4 text-center text-3xl font-bold">Dashboard Admin</h2>
         <div class="alert alert-info" role="alert">
             Selamat datang di dashboard admin! Di sini Anda dapat melihat statistik perpustakaan.
         </div>

@@ -54,7 +54,7 @@ $no = $offset + 1;
 <body style="background-color: #f8f9fa;">
     <main class="container-fluid py-4">
         <div class="container">
-            <h2 class="mb-4 text-center fw-bold">Daftar Peminjaman Buku</h2>
+            <h2 class="mb-4 text-center fw-bold text-3xl">Daftar Peminjaman Buku</h2>
 
             <div class="card shadow-sm rounded-4 border-0">
                 <div class="card-body p-4">
