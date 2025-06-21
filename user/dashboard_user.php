@@ -15,8 +15,20 @@ $queryPeminjaman = mysqli_query($conn, "
 ");
 $dataPeminjaman = mysqli_fetch_all($queryPeminjaman, MYSQLI_ASSOC);
 
-$queryKategori = mysqli_query($conn, "SELECT * FROM kategori");
-$queryBuku = mysqli_query($conn, "SELECT * FROM buku");
+// Query kategori
+$queryKategori = mysqli_query($conn, "SELECT id, nama_kategori FROM kategori ORDER BY nama_kategori");
+
+// Perbaiki query buku - ambil semua buku yang tersedia (tidak peduli status dipinjam)
+$queryBuku = mysqli_query($conn, "
+    SELECT b.id, b.judul, b.kategori_id, k.nama_kategori 
+    FROM buku b 
+    LEFT JOIN kategori k ON b.kategori_id = k.id 
+    WHERE b.jumlah >= 0
+    ORDER BY b.judul ASC
+");
+
+// Debug: cek berapa buku yang diambil
+$totalBuku = mysqli_num_rows($queryBuku);
 ?>
 
 <!DOCTYPE html>
@@ -41,6 +53,8 @@ $queryBuku = mysqli_query($conn, "SELECT * FROM buku");
                 📚 Selamat Datang <span><?= htmlspecialchars($_SESSION['nama'] ?? 'penyewa') ?></span> di SIMPENKU!
             </h1>
             <p class="text-gray-600">Pantau dan pinjam buku dengan mudah</p>
+            <!-- Debug info -->
+            <p class="text-xs text-gray-400">Total buku tersedia: <?= $totalBuku ?></p>
         </div>
 
         <!-- Grid Utama -->
@@ -99,8 +113,6 @@ $queryBuku = mysqli_query($conn, "SELECT * FROM buku");
                             </div>
                         <?php endforeach; ?>
                     </div>
-
-
                 </div>
             </div>
 
@@ -121,31 +133,28 @@ $queryBuku = mysqli_query($conn, "SELECT * FROM buku");
                     <form action="../includes/proses_pinjam.php" method="POST" class="space-y-8">
                         <div>
                             <label class="block mb-3 font-medium text-sm">Pilih Kategori</label>
-                            <select name="kategori_id" required class="w-full border border-gray-300 rounded px-3 py-2">
+                            <select name="kategori_id" id="kategori_select" class="w-full border border-gray-300 rounded px-3 py-2">
                                 <option value="">-- Pilih Kategori --</option>
-                                <?php while ($kategori = mysqli_fetch_assoc($queryKategori)): ?>
+                                <?php 
+                                mysqli_data_seek($queryKategori, 0);
+                                while ($kategori = mysqli_fetch_assoc($queryKategori)): ?>
                                     <option value="<?= $kategori['id'] ?>"><?= $kategori['nama_kategori'] ?></option>
                                 <?php endwhile; ?>
                             </select>
                         </div>
                         <div>
                             <label class="block mb-3 font-medium text-sm">Pilih Buku</label>
-                            <select name="buku_id" required class="w-full border border-gray-300 rounded px-3 py-2">
+                            <select name="buku_id" id="buku_select" required class="w-full border border-gray-300 rounded px-3 py-2">
                                 <option value="">-- Pilih Buku --</option>
-                                <?php while ($buku = mysqli_fetch_assoc($queryBuku)): ?>
-                                    <option value="<?= $buku['id'] ?>"><?= $buku['judul'] ?></option>
-                                <?php endwhile; ?>
                             </select>
                         </div>
                         <div>
                             <label class="block mb-3 font-medium text-sm">Tanggal Pinjam</label>
-                            <!-- Tanggal Pinjam -->
                             <input type="date" name="tanggal_pinjam" id="tanggal_pinjam" min="<?= date('Y-m-d'); ?>" required
                                 class="w-full border border-gray-300 rounded px-3 py-2">
                         </div>
                         <div>
                             <label class="block mb-3 font-medium text-sm">Tanggal Kembali</label>
-                            <!-- Tanggal Kembali -->
                             <input type="date" name="tanggal_kembali" id="tanggal_kembali" min="<?= date('Y-m-d'); ?>" required
                                 class="w-full border border-gray-300 rounded px-3 py-2">
                         </div>
@@ -153,15 +162,13 @@ $queryBuku = mysqli_query($conn, "SELECT * FROM buku");
                             class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">Pinjam
                             Buku</button>
                     </form>
-
-                    
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Kalender JS -->
     <script>
+        // Kalender JS
         const today = new Date();
         const year = today.getFullYear();
         const month = today.getMonth();
@@ -177,6 +184,113 @@ $queryBuku = mysqli_query($conn, "SELECT * FROM buku");
             const isToday = d === today.getDate();
             datesContainer.innerHTML += `<div class="${isToday ? 'bg-blue-600 text-white font-bold rounded-full' : 'text-gray-700'} py-1">${d}</div>`;
         }
+
+        // Data buku untuk JavaScript
+        const bukuData = [
+            <?php 
+            mysqli_data_seek($queryBuku, 0);
+            $bukuArray = [];
+            while ($buku = mysqli_fetch_assoc($queryBuku)) {
+                $kategori_id = $buku['kategori_id'] ? $buku['kategori_id'] : 'null';
+                $nama_kategori = $buku['nama_kategori'] ? addslashes($buku['nama_kategori']) : 'Tidak ada kategori';
+                $bukuArray[] = "{
+                    id: {$buku['id']}, 
+                    judul: '" . addslashes($buku['judul']) . "', 
+                    kategori_id: {$kategori_id}, 
+                    nama_kategori: '{$nama_kategori}'
+                }";
+            }
+            echo implode(',', $bukuArray);
+            ?>
+        ];
+
+        console.log('Total buku loaded:', bukuData.length);
+        console.log('Data buku:', bukuData);
+
+        const kategoriSelect = document.getElementById('kategori_select');
+        const bukuSelect = document.getElementById('buku_select');
+
+        // Function untuk populate buku berdasarkan kategori
+        function populateBuku(kategoriId = null) {
+            console.log('populateBuku dipanggil dengan kategoriId:', kategoriId);
+            
+            // Reset buku select
+            bukuSelect.innerHTML = '<option value="">-- Pilih Buku --</option>';
+            
+            let filteredBuku;
+            if (kategoriId && kategoriId !== '') {
+                // Filter buku berdasarkan kategori yang dipilih
+                filteredBuku = bukuData.filter(buku => {
+                    const match = String(buku.kategori_id) === String(kategoriId);
+                    return match;
+                });
+                console.log(`Buku dengan kategori ${kategoriId}:`, filteredBuku);
+            } else {
+                // Tampilkan semua buku jika tidak ada kategori yang dipilih
+                filteredBuku = bukuData;
+                console.log('Menampilkan semua buku:', filteredBuku.length, 'buku');
+            }
+            
+            // Tambahkan option buku ke select - HANYA JUDUL TANPA KATEGORI
+            filteredBuku.forEach(buku => {
+                const option = document.createElement('option');
+                option.value = buku.id;
+                option.textContent = buku.judul; // Hanya judul, tanpa kategori dalam kurung
+                option.setAttribute('data-kategori', buku.kategori_id);
+                bukuSelect.appendChild(option);
+            });
+            
+            console.log(`Total ${filteredBuku.length} buku ditambahkan ke dropdown`);
+        }
+
+        // Event listener untuk kategori
+        kategoriSelect.addEventListener('change', function() {
+            const selectedKategori = this.value;
+            console.log('Kategori dipilih:', selectedKategori);
+            
+            // Reset pilihan buku
+            bukuSelect.value = '';
+            
+            // Populate buku sesuai kategori
+            populateBuku(selectedKategori);
+        });
+
+        // Event listener untuk buku
+        bukuSelect.addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex];
+            
+            if (selectedOption && selectedOption.getAttribute('data-kategori')) {
+                const kategoriId = selectedOption.getAttribute('data-kategori');
+                console.log('Buku dipilih, kategori_id:', kategoriId);
+                
+                // Set kategori otomatis jika belum dipilih
+                if (!kategoriSelect.value || kategoriSelect.value !== kategoriId) {
+                    kategoriSelect.value = kategoriId;
+                    console.log('Kategori diset ke:', kategoriId);
+                }
+            }
+        });
+
+        // Inisialisasi: tampilkan semua buku saat pertama kali load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded, menginisialisasi dropdown buku...');
+            populateBuku();
+        });
+
+        // Validasi tanggal
+        document.getElementById('tanggal_pinjam').addEventListener('change', function() {
+            const tanggalPinjam = new Date(this.value);
+            const tanggalKembali = document.getElementById('tanggal_kembali');
+            
+            const minKembali = new Date(tanggalPinjam);
+            minKembali.setDate(minKembali.getDate() + 1);
+            
+            tanggalKembali.min = minKembali.toISOString().split('T')[0];
+            
+            if (tanggalKembali.value && new Date(tanggalKembali.value) <= tanggalPinjam) {
+                tanggalKembali.value = '';
+            }
+        });
     </script>
 
 </body>
