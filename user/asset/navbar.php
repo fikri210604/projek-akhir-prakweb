@@ -2,9 +2,10 @@
     <div class="max-w-screen-xl mx-auto px-4 lg:px-6 py-2.5 flex justify-between items-center">
         <a href="<?= isset($_SESSION['login']) && $_SESSION['login'] == 'true' ? 'dashboard_user.php' : 'index.php' ?>"
             class="flex items-center">
-            <img src="../../uploads/logo.png" class="mr-3 h-6 sm:h-9" alt="Logo">
+            <img src="/projek-akhir-prakweb/uploads/logo.png" class="mr-3 h-6 sm:h-9" alt="Logo">
             <span class="text-xl font-semibold dark:text-white">SIMPENKU</span>
         </a>
+        
 
         <div class="flex items-center space-x-4">
             <?php if (isset($_SESSION['login']) && $_SESSION['login'] == 'true'): ?>

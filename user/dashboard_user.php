@@ -139,18 +139,22 @@ $queryBuku = mysqli_query($conn, "SELECT * FROM buku");
                         </div>
                         <div>
                             <label class="block mb-3 font-medium text-sm">Tanggal Pinjam</label>
-                            <input type="date" name="tanggal_pinjam" required
+                            <!-- Tanggal Pinjam -->
+                            <input type="date" name="tanggal_pinjam" id="tanggal_pinjam" min="<?= date('Y-m-d'); ?>" required
                                 class="w-full border border-gray-300 rounded px-3 py-2">
                         </div>
                         <div>
                             <label class="block mb-3 font-medium text-sm">Tanggal Kembali</label>
-                            <input type="date" name="tanggal_kembali" required
+                            <!-- Tanggal Kembali -->
+                            <input type="date" name="tanggal_kembali" id="tanggal_kembali" min="<?= date('Y-m-d'); ?>" required
                                 class="w-full border border-gray-300 rounded px-3 py-2">
                         </div>
                         <button type="submit"
                             class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">Pinjam
                             Buku</button>
                     </form>
+
+                    
                 </div>
             </div>
         </div>
